@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ChessMind</title>
+    <!-- <link rel="stylesheet" type="text/css" href="style.css" /> -->
+    <!--Bulma CDN-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <!--Font Awesome CDN-->
+    <script
+      src="https://kit.fontawesome.com/8a80b728dc.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <!-- Navigation bar -->
+
+    <nav class="navbar border" role="navigation" aria-label="main navigation">
+      <div id="navbarBasicExample" class="navbar-menu lightYellow">
+        <div class="navbar-start">
+          <a
+            href="https://www.chess.com/login_and_go?returnUrl=https://www.chess.com/home "
+            class="navbar-item has-text-white"
+          >
+            <i
+              class="fa-solid fa-chess-board fa-2xl"
+              style="color: #2d1b00"
+            ></i>
+          </a>
+          <a id="home" class="navbar-item has-text-white">
+            <strong>Home</strong>
+          </a>
+
+          <a id="openings" class="navbar-item has-text-white">
+            <strong>Openings</strong>
+          </a>
+          <a id="tutorials" class="navbar-item has-text-white">
+            <strong>Tutorials</strong>
+          </a>
+          <a id="rankings" class="navbar-item has-text-white">
+            <strong>Rankings</strong>
+          </a>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link has-text-white"> <strong>More</strong> </a>
+
+            <div class="navbar-dropdown">
+              <a id="about" class="navbar-item"> <strong>About</strong> </a>
+              <a class="navbar-item">
+                <strong>Support</strong>
+              </a>
+              <hr class="navbar-divider" />
+              <a class="navbar-item">
+                <strong>Report an issue</strong>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sign Up and Log In Modals -->
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <button
+                id="signup-button"
+                class="button brown has-text-white has-text-weight-bold"
+              >
+                Sign Up
+              </button>
+
+              <div id="signup-modal" class="modal">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                  <header class="modal-card-head">
+                    <p class="modal-card-title">Sign Up</p>
+                    <button class="delete" aria-label="close"></button>
+                  </header>
+                  <section class="modal-card-body">
+                    <form>
+                      <div class="field">
+                        <label class="label" for="email">Email:</label>
+                        <div class="control">
+                          <input
+                            class="input"
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div class="field">
+                        <label class="label" for="username">Username:</label>
+                        <div class="control">
+                          <input
+                            class="input"
+                            type="text"
+                            id="username"
+                            name="username"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div class="field">
+                        <label class="label" for="password">Password:</label>
+                        <div class="control">
+                          <input
+                            class="input"
+                            type="password"
+                            id="password"
+                            name="password"
+                            required
+                          />
+                        </div>
+                      </div>
+                    </form>
+                  </section>
+                  <footer class="modal-card-foot">
+                    <button class="button brown has-text-white" id="signup">
+                      Sign Up
+                    </button>
+                    <button class="button" id="cancel">Cancel</button>
+                  </footer>
+                </div>
+              </div>
+              <button
+                id="login-button"
+                class="button brown has-text-white has-text-weight-bold"
+              >
+                Log In
+              </button>
+
+              <div id="login-modal" class="modal">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                  <header class="modal-card-head">
+                    <p class="modal-card-title">Log In</p>
+                    <button
+                      class="delete delete-login"
+                      aria-label="close"
+                    ></button>
+                  </header>
+                  <section class="modal-card-body">
+                    <form>
+                      <div class="field">
+                        <label class="label" for="username">Username:</label>
+                        <div class="control">
+                          <input
+                            class="input"
+                            type="text"
+                            id="username"
+                            name="username"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div class="field">
+                        <label class="label" for="password">Password:</label>
+                        <div class="control">
+                          <input
+                            class="input"
+                            type="password"
+                            id="password"
+                            name="password"
+                            required
+                          />
+                        </div>
+                      </div>
+                    </form>
+                  </section>
+                  <footer class="modal-card-foot">
+                    <button class="button brown has-text-white" id="login">
+                      Log In
+                    </button>
+                    <button class="button" id="cancel-login">Cancel</button>
+                  </footer>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="columns brown p-2 border">
+      <div class="column is-two-fifths">
+        <h1 class="is-size-2 has-text-white has-text-weight-bold">
+          ChessMind: Your Ultimate Guide to Chess
+        </h1>
+      </div>
+      <div class="column">
+        <div class="columns is-gapless">
+          <div class="column">
+            <img class="is-128x128" src="blackpieces.jpg" alt="black pieces" />
+          </div>
+          <div class="column">
+            <img
+              class="horizontal-flip is-128x128"
+              src="whitepieces.jpg"
+              alt="white pieces"
+            />
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main id="main" class="columns lightYellow height-600 border mb-0">
+      <div class="column">
+        <div class="content is-medium">
+          <h1
+            style="color: #452700"
+            ;
+            class="has-text-centered has-text-weight-bold"
+          >
+            Recent Events
+          </h1>
+          <p class="has-text-centered brown-text">
+            M Levy Rozman, a.k.a "GothamChess" the world's biggest chess
+            Youtuber, talked about his incredible growth over the last six
+            months, reactions from other top players, an amusing one-line
+            response from Magnus Carlsen, and his thoughts about the upc...
+          </p>
+          <div class="is-centered">
+            <figure class="image">
+              <img src="pawn.jpg" alt="pawn" />
+            </figure>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="content is-large">
+          <img
+            id="chess-board"
+            src="dark-wooden-chess-pieces-against-a-black-background.jpeg"
+            alt="cool chess photo"
+          />
+          <h2
+            style="color: #452700"
+            ;
+            class="has-text-centered has-text-weight-bold"
+          >
+            Chess Quote
+          </h2>
+          <p id="quote" class="has-text-centered brown-text">
+            “Chess is played with the mind and not with the hands!”
+          </p>
+          <p class="has-text-centered brown-text">(Renaud and Kahn)</p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="content is-medium">
+          <h1
+            style="color: #452700"
+            ;
+            class="has-text-centered has-text-weight-bold"
+          >
+            Tip of the Day
+          </h1>
+          <p class="has-text-centered brown-text">
+            Every move should improve the quality of the position, gain material
+            or gain time.
+          </p>
+          <div class="is-centered">
+            <figure class="image">
+              <img src="queen.jpg" alt="queen's gambit" />
+            </figure>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="footer brown has-text-white has-text-weight-bold height-100 border p-2"
+    >
+      <div class="content has-text-centered">
+        <p>&copy; 2023 ChessMind. All rights reserved.</p>
+      </div>
+    </footer>
+    <script src="app.js"></script>
+  </body>
+</html>
