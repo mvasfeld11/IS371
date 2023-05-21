@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ChessMind</title>
+    <!-- <link rel="stylesheet" type="text/css" href="style.css" /> -->
+    <!--Bulma CDN-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <!--Font Awesome CDN-->
+    <script
+      src="https://kit.fontawesome.com/8a80b728dc.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <!-- Navigation bar -->
+
+    <nav class="navbar border" role="navigation" aria-label="main navigation">
+      <div id="navbarBasicExample" class="navbar-menu lightYellow">
+        <div class="navbar-start">
+          <a
+            href="https://www.chess.com/login_and_go?returnUrl=https://www.chess.com/home "
+            class="navbar-item has-text-white"
+          >
+            <i
+              class="fa-solid fa-chess-board fa-2xl"
+              style="color: #2d1b00"
+            ></i>
+          </a>
+          <a id="home" class="navbar-item has-text-white">
+            <strong>Home</strong>
+          </a>
+
+          <a id="openings" class="navbar-item has-text-white">
+            <strong>Openings</strong>
+          </a>
+          <a id="tutorials" class="navbar-item has-text-white">
+            <strong>Tutorials</strong>
+          </a>
+          <a id="rankings" class="navbar-item has-text-white">
+            <strong>Rankings</strong>
+          </a>
+          <a id="community" class="navbar-item has-text-white signedout">
+            <strong>Chess Community</strong>
+          </a>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link has-text-white"> <strong>More</strong> </a>
+
+            <div class="navbar-dropdown">
+              <a id="about" class="navbar-item"> <strong>About</strong> </a>
+              <hr class="navbar-divider" />
+              <a id="report" class="navbar-item">
+                <strong>Report an issue</strong>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sign Up and Log In Modals -->
+        <div class="navbar-end">
+          <div class="navbar-item signedout">
+            <span id="currentuser" class="brown-text"></span>
+          </div>
+          <div class="navbar-item">
+            <div class="buttons">
+              <button
+                id="signup-button"
+                class="signedin button brown has-text-white has-text-weight-bold"
+              >
+                Sign Up
+              </button>
+
+              <div id="signup-modal" class="modal">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                  <header class="modal-card-head">
+                    <p class="modal-card-title">Sign Up</p>
+                    <button class="delete" aria-label="close"></button>
+                  </header>
+                  <section class="modal-card-body">
+                    <form id="signup_form">
+                      <!-- Email -->
+                      <div class="field">
+                        <label class="label">Email</label>
+                        <div class="control">
+                          <input type="email" id="email" />
+                        </div>
+                      </div>
+                      <!-- Password -->
+                      <div class="field">
+                        <label class="label">Password</label>
+                        <div class="control">
+                          <input type="password" id="password" />
+                        </div>
+                      </div>
+                      <!-- submit -->
+                      <div class="field">
+                        <div class="control">
+                          <button class="button brown has-text-white">
+                            Submit
+                          </button>
+                          <button class="button" id="cancel">Cancel</button>
+                        </div>
+                      </div>
+                    </form>
+                  </section>
+                </div>
+              </div>
+              <button
+                id="login-button"
+                class="signedin button brown has-text-white has-text-weight-bold"
+              >
+                Log In
+              </button>
+
+              <div id="login-modal" class="modal">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                  <header class="modal-card-head">
+                    <p class="modal-card-title">Log In</p>
+                    <button
+                      class="delete delete-login"
+                      aria-label="close"
+                    ></button>
+                  </header>
+                  <section class="modal-card-body">
+                    <form id="login_form">
+                      <!-- Email -->
+                      <div class="field">
+                        <label class="label">Email</label>
+                        <div class="control">
+                          <input type="email" id="email_" />
+                        </div>
+                      </div>
+                      <!-- Password -->
+                      <div class="field">
+                        <label class="label">Password</label>
+                        <div class="control">
+                          <input type="password" id="password_" />
+                        </div>
+                      </div>
+                      <!-- submit -->
+                      <div class="field">
+                        <div class="control">
+                          <button
+                            class="button brown has-text-white"
+                            id="login_submit"
+                          >
+                            Submit
+                          </button>
+                          <button class="button" id="cancel-login">
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </section>
+                </div>
+              </div>
+              <button
+                id="logout-button"
+                class="signedout is-hidden button brown has-text-white has-text-weight-bold"
+              >
+                Log Out
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <article
+      class="message is-hidden is-warning has-text-centered"
+      id="message_bar"
+    ></article>
+
+    <!-- Header -->
+    <header class="columns brown p-2 border">
+      <div class="column is-two-fifths">
+        <h1 class="is-size-2 has-text-white has-text-weight-bold">
+          ChessMind: Your Ultimate Guide to Chess
+        </h1>
+      </div>
+      <div class="column">
+        <div class="columns is-gapless">
+          <div class="column">
+            <img class="is-128x128" src="blackpieces.jpg" alt="black pieces" />
+          </div>
+          <div class="column">
+            <img
+              class="horizontal-flip is-128x128"
+              src="whitepieces.jpg"
+              alt="white pieces"
+            />
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main id="main" class="columns lightYellow height-600 border mb-0">
+      <div class="column">
+        <div class="content is-medium is-centered">
+          <h1
+            style="color: #452700"
+            ;
+            class="has-text-centered has-text-weight-bold"
+          >
+            Recent Events
+          </h1>
+          <p
+            id="currEvent"
+            class="has-text-centered brown-text has-text-bold"
+          ></p>
+          <div class="is-centered">
+            <figure class="image">
+              <img src="pawn.jpg" alt="pawn" />
+            </figure>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="content is-large">
+          <img
+            id="chess-board"
+            src="dark-wooden-chess-pieces-against-a-black-background.jpeg"
+            alt="cool chess photo"
+          />
+          <h2
+            style="color: #452700"
+            ;
+            class="has-text-centered has-text-weight-bold"
+          >
+            Chess Quote
+          </h2>
+          <p id="quote" class="has-text-centered brown-text"></p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="content is-medium">
+          <h1
+            style="color: #452700"
+            ;
+            class="has-text-centered has-text-weight-bold"
+          >
+            Tip of the Day
+          </h1>
+          <p id="tip" class="has-text-centered brown-text"></p>
+          <div class="is-centered">
+            <figure class="image">
+              <img src="queen.jpg" alt="queen's gambit" />
+            </figure>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Main for when openings page is selected -->
+    <main
+      id="openings-main"
+      class="columns lightYellow height-600 border mb-0 is-hidden"
+    >
+      <section class="hero is-warning">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">Popular Chess Openings</h1>
+            <h2 class="subtitle">
+              Here are some of the most popular chess openings:
+            </h2>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <table class="table is-bordered is-hoverable is-fullwidth">
+            <thead>
+              <tr>
+                <th>Opening Name</th>
+                <th>Description</th>
+                <th>Notable Players</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Queen's Gambit</td>
+                <td>
+                  A popular opening that involves white offering a pawn in
+                  exchange for control of the center of the board.
+                </td>
+                <td>Garry Kasparov, Anatoly Karpov, Bobby Fischer</td>
+              </tr>
+              <tr>
+                <td>Sicilian Defense</td>
+                <td>
+                  A popular defense for black that involves playing ...c5 to
+                  attack white's center pawns.
+                </td>
+                <td>Garry Kasparov, Magnus Carlsen, Vishy Anand</td>
+              </tr>
+              <tr>
+                <td>King's Indian Defense</td>
+                <td>
+                  A solid defense for black that involves playing ...d6 and
+                  ...e5 to control the center and attack white's pawn structure.
+                </td>
+                <td>Bobby Fischer, Gary Kasparov, Viswanathan Anand</td>
+              </tr>
+              <tr>
+                <td>French Defense</td>
+                <td>
+                  A popular defense for black that involves playing ...e6 and
+                  ...d5 to control the center and limit white's pawn advances.
+                </td>
+                <td>Anatoly Karpov, Viswanathan Anand, Magnus Carlsen</td>
+              </tr>
+              <tr>
+                <td>Italian Game</td>
+                <td>
+                  A popular opening that involves white playing 2.Nf3 and 3.Bc4
+                  to control the center and develop their pieces.
+                </td>
+                <td>Paul Morphy, Bobby Fischer, Viswanathan Anand</td>
+              </tr>
+              <tr>
+                <td>Ruy Lopez</td>
+                <td>
+                  A popular opening that involves white playing 3.Bb5 to pin the
+                  knight and control the center.
+                </td>
+                <td>Paul Morphy, Bobby Fischer, Garry Kasparov</td>
+              </tr>
+              <tr>
+                <td>Caro-Kann Defense</td>
+                <td>
+                  A solid defense for black that involves playing ...c6 and
+                  ...d5 to control the center and limit white's pawn advances.
+                </td>
+                <td>Garry Kasparov, Anatoly Karpov, Viswanathan Anand</td>
+              </tr>
+              <tr>
+                <td>Scotch Game</td>
+                <td>
+                  A popular opening for white that involves playing 3.d4 to
+                  immediately challenge black's control of the center.
+                </td>
+                <td>Bobby Fischer, Garry Kasparov, Magnus Carlsen</td>
+              </tr>
+              <tr>
+                <td>Grünfeld Defense</td>
+                <td>
+                  A popular defense for black that involves playing ...d5 and
+                  allowing white to establish a strong center before attacking
+                  it.
+                </td>
+                <td>Garry Kasparov, Anatoly Karpov, Magnus Carlsen</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- Main for when tutorials page is selected -->
+    <main
+      id="tutorial-main"
+      class="columns lightYellow height-600 border mb-0 is-hidden"
+    >
+      <section class="hero is-warning">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">Chess Tutorial</h1>
+            <h2 class="subtitle">Learn the basics of chess</h2>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <h2 class="title">Introduction</h2>
+          <p>
+            Chess is a two-player strategy game played on a checkered board with
+            64 squares arranged in an 8x8 grid. Each player starts with 16
+            pieces: one king, one queen, two rooks, two knights, two bishops,
+            and eight pawns. The goal of the game is to checkmate the opponent's
+            king, which means the king is in a position to be captured and
+            cannot escape capture on the next move.
+          </p>
+          <h2 class="title">Pieces and Movement</h2>
+          <p>
+            The king can move one square in any direction. The queen can move
+            any number of squares diagonally, horizontally, or vertically. The
+            rook can move any number of squares horizontally or vertically. The
+            knight moves in an L-shape pattern, two squares in a horizontal or
+            vertical direction and then one square in a perpendicular direction.
+            The bishop moves any number of squares diagonally. Pawns can move
+            one or two squares forward on their first move and one square
+            forward on subsequent moves, and can only capture diagonally.
+          </p>
+          <h2 class="title">Gameplay</h2>
+          <p>
+            The game begins with white moving first. Players take turns moving
+            their pieces with the goal of putting the opponent's king in
+            checkmate. If a player's king is under attack, they must make a move
+            to get out of check. If a player's king is not in check but they
+            have no legal move, the game is a draw. The game can also end in a
+            draw by mutual agreement, stalemate, threefold repetition, or the
+            50-move rule.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Main for when rankings page selected -->
+    <main
+      id="rankings-main"
+      class="columns lightYellow height-600 border mb-0 is-hidden"
+    >
+      <section class="hero is-warning">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">Current and All Time Chess Rankings</h1>
+            <h2 class="subtitle">
+              Here are some of the current and all time greats of Chess
+            </h2>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <h1 class="title has-text-centered">
+            Top 10 All-Time Chess Rankings
+          </h1>
+          <table class="table is-fullwidth">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Country</th>
+                <th>Elo Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Garry Kasparov</td>
+                <td>Russia</td>
+                <td>2851</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Magnus Carlsen</td>
+                <td>Norway</td>
+                <td>2847</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Fabiano Caruana</td>
+                <td>United States</td>
+                <td>2820</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Levon Aronian</td>
+                <td>Armenia</td>
+                <td>2805</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Wesley So</td>
+                <td>United States</td>
+                <td>2799</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Vladimir Kramnik</td>
+                <td>Russia</td>
+                <td>2790</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>Viswanathan Anand</td>
+                <td>India</td>
+                <td>2776</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>Hikaru Nakamura</td>
+                <td>United States</td>
+                <td>2774</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>Peter Svidler</td>
+                <td>Russia</td>
+                <td>2770</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>Maxime Vachier-Lagrave</td>
+                <td>France</td>
+                <td>2760</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <h1 class="title has-text-centered">Current Chess Rankings</h1>
+          <table class="table is-striped is-fullwidth">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Country</th>
+                <th>Elo Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Magnus Carlsen</td>
+                <td>Norway</td>
+                <td>2847</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Fabiano Caruana</td>
+                <td>USA</td>
+                <td>2827</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Ding Liren</td>
+                <td>China</td>
+                <td>2801</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Ian Nepomniachtchi</td>
+                <td>Russia</td>
+                <td>2792</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Levon Aronian</td>
+                <td>Armenia</td>
+                <td>2781</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Wesley So</td>
+                <td>USA</td>
+                <td>2772</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>Anish Giri</td>
+                <td>Netherlands</td>
+                <td>2764</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>Shakhriyar Mamedyarov</td>
+                <td>Azerbaijan</td>
+                <td>2762</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>Alexander Grischuk</td>
+                <td>Russia</td>
+                <td>2761</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>Teimour Radjabov</td>
+                <td>Azerbaijan</td>
+                <td>2760</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <footer>
+        <p>
+          Source:
+          <cite
+            ><a href="https://ratings.fide.com/top_lists.phtml"
+              >FIDE Top 100 Players</a
+            ></cite
+          >
+        </p>
+      </footer>
+      `;
+    </main>
+
+    <!-- Main for when About page selected -->
+    <main
+      id="about-main"
+      class="columns lightYellow height-600 border mb-0 is-hidden"
+    >
+      <section class="hero is-warning">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">About ChessMind</h1>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <h2 class="title">Welcome to ChessMind</h2>
+          <p>
+            Welcome to ChessMind, an informative and interactive website
+            designed for chess enthusiasts and beginners alike. My website aims
+            to provide a community-based platform where players can learn, play,
+            and keep up to date with the latest chess news and events.
+          </p>
+          <br />
+          <p>
+            As part of an Info Systems course to learn JavaScript, Bulma, HTML,
+            CSS, and Firebase, my website showcases some skills that employers
+            may appreciate. With a focus on clean design and user-friendly
+            interface, my website offers a range of features, including
+            resources and tutorials for beginners, a forum for users to share
+            ideas and strategies, and potentially in the future, an interactive
+            board to play against the computer and other users.
+          </p>
+          <br />
+          <p>
+            My objective is to increase the popularity and interest in the game
+            of chess while creating a welcoming community for users to share
+            their experiences and tips. I believe that by offering a unique
+            experience that caters to the needs of chess enthusiasts and
+            beginners, ChessMind can be the go-to destination for all things
+            chess-related.
+          </p>
+          <br />
+          <p>
+            Similar to Chess.com and Lichess.com, my website aims to provide a
+            range of features that are both informative and engaging. The
+            website offer history and current event articles/headlines related
+            to chess, general tutorials and resources for beginners, and
+            potentially in the future, a unique game of the day feature.
+          </p>
+          <br />
+          <p>
+            The database stores user profiles, real-life rankings of players in
+            the world, and potential rankings in the website's community if
+            interactive games are implemented into the website. By providing a
+            range of features and experiences, I hope to create a vibrant
+            community where chess players and enthusiasts can learn, play, and
+            connect with others who share their passion for the game.
+          </p>
+          <br />
+          <p>
+            Thank you for visiting ChessMind, and I hope you enjoy your stay!
+          </p>
+        </div>
+      </section>
+      `;
+    </main>
+
+    <!-- Main for when Report an Issue Page selected -->
+    <main
+      id="report-main"
+      class="columns lightYellow height-600 border mb-0 is-hidden"
+    >
+      <section class="hero is-warning">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">Report an Issue</h1>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <h2 class="title has-text-centered">Issue Form</h2>
+          <form id="report-issue-form">
+            <label for="issue-type">Issue Type</label>
+            <select id="issue-type" name="issue-type">
+              <option value="bug">Bug</option>
+              <option value="feature-request">Feature Request</option>
+              <option value="general-feedback">General Feedback</option>
+            </select>
+
+            <label for="issue-description">Issue Description</label>
+            <textarea
+              id="issue-description"
+              name="issue-description"
+              required
+            ></textarea>
+
+            <label for="reporter-email">Reporter Email</label>
+            <input
+              type="email"
+              id="reporter-email"
+              name="reporter-email"
+              required
+            />
+
+            <button type="submit" class="button brown has-text-white">
+              Submit
+            </button>
+          </form>
+        </div>
+      </section>
+      `;
+    </main>
+
+    <!-- Main for when Community page is selected -->
+    <main
+      id="community-main"
+      class="columns lightYellow height-600 border mb-0 is-hidden"
+    >
+      <section class="section is-size-50">
+        <div class="container" id="posts-container">
+          <h2 class="title has-text-centered">ChessMind Community Posts</h2>
+        </div>
+      </section>
+      <section class="hero is-warning is-size-2">
+        <div class="hero-body">
+          <div class="container">
+            <div class="container">
+              <h1 class="title has-text-centered">Make a Post</h1>
+              <hr />
+              <form id="post-form">
+                <div class="field">
+                  <label class="label">Name</label>
+                  <div class="control">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Your name"
+                      id="name-input"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label">Title</label>
+                  <div class="control">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Post title"
+                      id="title-input"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label">Description</label>
+                  <div class="control">
+                    <textarea
+                      class="textarea"
+                      placeholder="Post description"
+                      id="description-input"
+                      required
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="control">
+                    <button class="button brown has-text-white" type="submit">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </form>
+              <hr />
+              <h2 class="subtitle has-text-centered">
+                Share a tip, trick, anecdote or anything chess related to the
+                ChessMind Community
+              </h2>
+              <div id="posts"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="footer brown has-text-white has-text-weight-bold height-100 border p-2"
+    >
+      <div class="content has-text-centered">
+        <p>&copy; 2023 ChessMind. All rights reserved.</p>
+      </div>
+    </footer>
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-storage.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+
+    <script>
+      // TODO
+      // Copy **only** your firebaseConfig from Google Firebae and add it below
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCU8WkRZH8WOgFcPWE7yWBqLPNH500UAiI",
+        authDomain: "chessmind-5360f.firebaseapp.com",
+        projectId: "chessmind-5360f",
+        storageBucket: "chessmind-5360f.appspot.com",
+        messagingSenderId: "1081077030019",
+        appId: "1:1081077030019:web:d1e2e8f0b932a197cc8fb6",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      // define authentication variable
+      let auth = firebase.auth();
+      let db = firebase.firestore();
+    </script>
+    <script src="app.js"></script>
+  </body>
+</html>
